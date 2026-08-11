@@ -56,13 +56,17 @@ input { width: 90%; padding: 10px; margin: 5px 0; border: 1px solid #ccc; border
   }
   
  window.facebookLogin = () => {
-    const provider = new FacebookAuthProvider();
+    const provider = new FacebookAuthProvider(); provider.addScope('public_profile'); 
+    provider.setCustomParameters({
+        'display': 'popup'
+    });
+
     signInWithPopup(auth, provider).then(res => {
         status.innerText = "Welcome " + res.user.displayName;
     }).catch(e => {
         status.innerText = e.message;
     })
-}
+ }
 
   window.emailSignup = () => {
     createUserWithEmailAndPassword(auth, email.value, password.value)
