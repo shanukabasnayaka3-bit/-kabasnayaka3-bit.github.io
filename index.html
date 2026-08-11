@@ -57,15 +57,7 @@ input { width: 90%; padding: 10px; margin: 5px 0; border: 1px solid #ccc; border
   
  window.facebookLogin = () => {
     const provider = new FacebookAuthProvider();
-    provider.addScope('public_profile');
-    provider.setCustomParameters({
-        'auth_type': 'rerequest'
-    });
-    signInWithPopup(auth, provider).then(res => {
-        status.innerText = "Welcome " + res.user.displayName;
-    }).catch(e => {
-        status.innerText = e.message;
-    })
+    signInWithPopup(auth, provider).then(res => status.innerText = "Welcome " + res.user.displayName).catch(e => status.innerText = e.message)
 }
 
   window.emailSignup = () => {
