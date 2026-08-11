@@ -21,16 +21,34 @@
     signInWithPopup(auth, provider).then(res => status.innerText = "Welcome " + res.user.displayName).catch(e => status.innerText = e.message);
   }
   
- window.facebookLogin = () => {
-    const provider = new FacebookAuthProvider();
-    provider.addScope('public_profile'); 
+ window.facebookLogin = async () => {
+    try {
+        const provider = new FacebookAuthProvider();
 
-    signInWithPopup(auth, provider).then(res => {
-        status.innerText = "Welcome " + res.user.displayName;
-    }).catch(e => {
-        status.innerText = e.message;
-    })
-}
+        // Facebook profile information
+        provider.addScope("public_profile");
+
+        // Mobile browser වල popup problems අඩු කරන්න
+        provider.setCustomParameters({
+            display: "popup"
+        });
+
+        const result = await signInWithPopup(auth, provider);
+
+        const user = result.user;
+
+        status.innerText =
+            "Welcome " + (user.displayName || user.email || "User");
+
+    } catch (error) {
+
+        console.error("Facebook Login Error:", error);
+
+        status.innerText =
+            "Facebook Login Error: " +
+            (error.message || error.code);
+    }
+};
 
   window.emailSignup = () => {
     createUserWithEmailAndPassword(auth, email.value, password.value)
