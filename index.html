@@ -42,4 +42,35 @@ input { width: 90%; padding: 10px; margin: 5px 0; border: 1px solid #ccc; border
     projectId: "free-tools-hub-d04b6",
     storageBucket: "free-tools-hub-d04b6.firebasestorage.app",
     messagingSenderId: "226171100495",
-    app
+    appId: "1:226171100495:web:80d2cb65dcbf58f98bf93a",
+    measurementId: "G-ST120E96SX"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const status = document.getElementById('status');
+
+  window.googleLogin = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider).then(res => status.innerText = "Welcome " + res.user.displayName).catch(e => status.innerText = e.message);
+  }
+  
+  window.facebookLogin = () => {
+    const provider = new FacebookAuthProvider();
+    signInWithPopup(auth, provider).then(res => status.innerText = "Welcome " + res.user.displayName).catch(e => status.innerText = e.message);
+  }
+
+  window.emailSignup = () => {
+    createUserWithEmailAndPassword(auth, email.value, password.value)
+    .then(res => status.innerText = "Signed up: " + res.user.email)
+    .catch(e => status.innerText = e.message);
+  }
+  
+  window.emailLogin = () => {
+    signInWithEmailAndPassword(auth, email.value, password.value)
+    .then(res => status.innerText = "Logged in: " + res.user.email)
+    .catch(e => status.innerText = e.message);
+  }
+</script>
+</body>
+</html>
