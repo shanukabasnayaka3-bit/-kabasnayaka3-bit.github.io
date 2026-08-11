@@ -23,7 +23,6 @@
   
  window.facebookLogin = () => {
     const provider = new FacebookAuthProvider();
-    // email ඉල්ලන්නේ නෑ. public_profile විතරයි
     provider.addScope('public_profile'); 
 
     signInWithPopup(auth, provider).then(res => {
